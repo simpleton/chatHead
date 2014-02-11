@@ -7,8 +7,6 @@ import android.view.View;
 public class ChatHeadStarter {
   private Context context;
   
-  static ChatHeadStarter ins;
-  
   public ChatHeadStarter(Context context) {
     this.context = context;
   }

@@ -1,5 +1,6 @@
 package com.example.chatHead.service;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +22,7 @@ public class ChatHeadResManager {
     return ins;
   }
   
-  public void setChatHeadClickListener(View.OnClickListener l) {
+  /*packaged*/ void setChatHeadClickListener(View.OnClickListener l) {
     this.clickListener = l;
   }
   
@@ -29,7 +30,13 @@ public class ChatHeadResManager {
     return this.clickListener;
   }
   
-  public void addChatHeadImage(Bitmap bitmap) {
+  public void addChatHeadImage(Bitmap bitmap, Context context) {
+    if (context == null) {
+      throw new IllegalArgumentException("Context equals to NULL");
+    }
+    if (headImage == null) {
+      headImage = new ImageView(context);
+    }
     headImage.setImageBitmap(bitmap);
   }
   

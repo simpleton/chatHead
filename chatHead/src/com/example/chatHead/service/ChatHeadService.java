@@ -11,14 +11,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.example.chathead.R;
-
 public class ChatHeadService extends Service{
   
   private static final String TAG = "ChatHeadService";
   
   private WindowManager windowManager;
-  private ImageView chatHead;
   
   @Override public IBinder onBind(Intent arg0) {
     Log.d(TAG, "onBind");
@@ -28,9 +25,7 @@ public class ChatHeadService extends Service{
   @Override public void onCreate() {
     super.onCreate();
     this.windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-    this.chatHead = new ImageView(this);
     
-    chatHead.setImageResource(R.drawable.ic_launcher);
     final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
         WindowManager.LayoutParams.WRAP_CONTENT,
         WindowManager.LayoutParams.WRAP_CONTENT,
@@ -41,7 +36,7 @@ public class ChatHeadService extends Service{
     params.gravity = Gravity.TOP | Gravity.LEFT;
     params.x = 0;
     params.y = 100;
-    
+    ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
     windowManager.addView(chatHead, params);
     
     initChatHeadTouchListener(params);
@@ -52,6 +47,9 @@ public class ChatHeadService extends Service{
 
   private void initChatHeadTouchListener(final WindowManager.LayoutParams params) {
     try {
+      final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
+      if (chatHead == null) return;
+      
       chatHead.setOnTouchListener(new View.OnTouchListener() {
         private WindowManager.LayoutParams paramsF = params;
         private int initialX;
@@ -86,11 +84,16 @@ public class ChatHeadService extends Service{
   }
 
   private void initChatHeadClickListener() {
-    chatHead.setOnClickListener(ChatHeadResManager.getInstance().getChatHeadClickListener());
+    final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
+    if (chatHead != null) {
+      chatHead.setOnClickListener(ChatHeadResManager.getInstance().getChatHeadClickListener());
+    }
+    
   }
   
   @Override public void onDestroy() {
     super.onDestroy();
+    View chatHead = ChatHeadResManager.getInstance().getChatHeadViewGroup();
     if (chatHead != null) {
       windowManager.removeView(chatHead);
     }
