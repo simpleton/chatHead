@@ -26,7 +26,7 @@
         </activity>
         
         <service
-            android:name="com.example.chatHead.service.chatHeadService"
+            android:name="com.example.chatHead.service.ChatHeadService"
             android:exported="true">
         </service>
         

@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.example.chathead.R;
 
-public class chatHeadService extends Service{
+public class ChatHeadService extends Service{
   
   private static final String TAG = "ChatHeadService";
   
@@ -21,6 +21,7 @@ public class chatHeadService extends Service{
   private ImageView chatHead;
   
   @Override public IBinder onBind(Intent arg0) {
+    Log.d(TAG, "onBind");
     return null;
   }
  
@@ -85,11 +86,7 @@ public class chatHeadService extends Service{
   }
 
   private void initChatHeadClickListener() {
-    try {
-      
-    } catch (Exception e) {
-      Log.e(TAG, e.toString());
-    }
+    chatHead.setOnClickListener(ChatHeadResManager.getInstance().getChatHeadClickListener());
   }
   
   @Override public void onDestroy() {
