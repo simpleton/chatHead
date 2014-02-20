@@ -5,18 +5,21 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.example.chatHead.GestureListener;
+
 public class ChatHeadService extends Service{
   
   private static final String TAG = "ChatHeadService";
   
   private WindowManager windowManager;
-  
+  private GestureDetector gestureDetector;
   @Override public IBinder onBind(Intent arg0) {
     Log.d(TAG, "onBind");
     return null;
@@ -45,7 +48,7 @@ public class ChatHeadService extends Service{
     
   }
 
-  private void initChatHeadTouchListener(final WindowManager.LayoutParams params) {
+  /*private void initChatHeadTouchListener(final WindowManager.LayoutParams params) {
     try {
       final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
       if (chatHead == null) return;
@@ -82,7 +85,20 @@ public class ChatHeadService extends Service{
       Log.e(TAG, e.toString());
     }
   }
+  */
+  private void initChatHeadTouchListener(final WindowManager.LayoutParams params) {
+    final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
+    if (chatHead == null) return;
+    this.gestureDetector = new GestureDetector(this, new GestureListener(params, windowManager, chatHead));
+    chatHead.setOnTouchListener(new View.OnTouchListener() {
 
+      @Override public boolean onTouch(View v, MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return false;
+      }
+    });
+  }
+  
   private void initChatHeadClickListener() {
     final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
     if (chatHead != null) {
