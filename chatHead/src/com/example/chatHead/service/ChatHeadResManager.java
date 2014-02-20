@@ -4,15 +4,26 @@ import com.example.chatHead.service.GestureListener.OnSingleClickListener;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 public class ChatHeadResManager {
   private static ChatHeadResManager ins;
   private OnSingleClickListener clickListener;
   private ImageView headImage;
-  
+  private Bitmap bitmap;
+  private final WindowManager.LayoutParams params;
+  @SuppressWarnings("deprecation")
   private ChatHeadResManager() {
+    params = new WindowManager.LayoutParams(
+        WindowManager.LayoutParams.FILL_PARENT,
+        WindowManager.LayoutParams.FILL_PARENT,
+        WindowManager.LayoutParams.TYPE_PHONE,
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        PixelFormat.TRANSLUCENT);
   }
   
   public static ChatHeadResManager getInstance() {
@@ -22,6 +33,10 @@ public class ChatHeadResManager {
       }
     }
     return ins;
+  }
+  
+  public WindowManager.LayoutParams getWindowManagerParams() {
+    return params;
   }
   
   /*packaged*/ void setChatHeadClickListener(OnSingleClickListener l) {
@@ -40,6 +55,7 @@ public class ChatHeadResManager {
       headImage = new ImageView(context);
     }
     headImage.setImageBitmap(bitmap);
+    this.bitmap = bitmap;
   }
   
   public void removeHeadImage(Bitmap bitmap) {
@@ -49,5 +65,9 @@ public class ChatHeadResManager {
   
   public View getChatHeadViewGroup() {
     return headImage;
+  }
+  //TODO: array
+  public Bitmap getChatHeadBitmap() {
+    return this.bitmap;
   }
 }
