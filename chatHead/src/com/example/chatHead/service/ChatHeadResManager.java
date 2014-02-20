@@ -1,5 +1,7 @@
 package com.example.chatHead.service;
 
+import com.example.chatHead.service.GestureListener.OnSingleClickListener;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
@@ -7,7 +9,7 @@ import android.widget.ImageView;
 
 public class ChatHeadResManager {
   private static ChatHeadResManager ins;
-  private View.OnClickListener clickListener;
+  private OnSingleClickListener clickListener;
   private ImageView headImage;
   
   private ChatHeadResManager() {
@@ -22,11 +24,11 @@ public class ChatHeadResManager {
     return ins;
   }
   
-  /*packaged*/ void setChatHeadClickListener(View.OnClickListener l) {
+  /*packaged*/ void setChatHeadClickListener(OnSingleClickListener l) {
     this.clickListener = l;
   }
   
-  public View.OnClickListener getChatHeadClickListener() {
+  public OnSingleClickListener getChatHeadClickListener() {
     return this.clickListener;
   }
   

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.example.chatHead.GestureListener;
 
 public class ChatHeadService extends Service{
   
@@ -20,6 +19,7 @@ public class ChatHeadService extends Service{
   
   private WindowManager windowManager;
   private GestureDetector gestureDetector;
+  
   @Override public IBinder onBind(Intent arg0) {
     Log.d(TAG, "onBind");
     return null;
@@ -43,49 +43,8 @@ public class ChatHeadService extends Service{
     windowManager.addView(chatHead, params);
     
     initChatHeadTouchListener(params);
-    
-    initChatHeadClickListener();
-    
   }
 
-  /*private void initChatHeadTouchListener(final WindowManager.LayoutParams params) {
-    try {
-      final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
-      if (chatHead == null) return;
-      
-      chatHead.setOnTouchListener(new View.OnTouchListener() {
-        private WindowManager.LayoutParams paramsF = params;
-        private int initialX;
-        private int initialY;
-        private float initialTouchX;
-        private float initialTouchY;
-        
-        @Override public boolean onTouch(View v, MotionEvent event) {
-          switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-              initialX = paramsF.x;
-              initialY = paramsF.y;
-              initialTouchX = event.getRawX();
-              initialTouchY = event.getRawY();
-              break;
-            case MotionEvent.ACTION_UP:
-              break;
-            case MotionEvent.ACTION_MOVE:
-              paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
-              paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
-              windowManager.updateViewLayout(chatHead, paramsF);
-              break;
-            default:
-              break;
-          }
-          return false;
-        }
-      });
-    } catch (Exception e) {
-      Log.e(TAG, e.toString());
-    }
-  }
-  */
   private void initChatHeadTouchListener(final WindowManager.LayoutParams params) {
     final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
     if (chatHead == null) return;
@@ -93,18 +52,12 @@ public class ChatHeadService extends Service{
     chatHead.setOnTouchListener(new View.OnTouchListener() {
 
       @Override public boolean onTouch(View v, MotionEvent event) {
-        gestureDetector.onTouchEvent(event);
+        if (!gestureDetector.onTouchEvent(event) && event.getAction() == MotionEvent.ACTION_UP) {
+          Log.i(TAG, "on Up");
+        }
         return false;
       }
     });
-  }
-  
-  private void initChatHeadClickListener() {
-    final ImageView chatHead = (ImageView) ChatHeadResManager.getInstance().getChatHeadViewGroup();
-    if (chatHead != null) {
-      chatHead.setOnClickListener(ChatHeadResManager.getInstance().getChatHeadClickListener());
-    }
-    
   }
   
   @Override public void onDestroy() {

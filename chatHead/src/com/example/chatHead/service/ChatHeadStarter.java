@@ -2,7 +2,8 @@ package com.example.chatHead.service;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
+
+import com.example.chatHead.service.GestureListener.OnSingleClickListener;
 
 public class ChatHeadStarter {
   private Context context;
@@ -11,7 +12,7 @@ public class ChatHeadStarter {
     this.context = context;
   }
   
-  public ChatHeadStarter setClickListener(final View.OnClickListener l) {
+  public ChatHeadStarter setClickListener(final OnSingleClickListener l) {
     ChatHeadResManager.getInstance().setChatHeadClickListener(l);
     return this;
   }

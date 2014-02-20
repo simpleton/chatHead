@@ -1,4 +1,4 @@
-package com.example.chatHead;
+package com.example.chatHead.service;
 
 import android.util.Log;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -16,6 +16,10 @@ public class GestureListener extends SimpleOnGestureListener {
   private int initialY;
   private float initialTouchX;
   private float initialTouchY;
+  
+  public interface OnSingleClickListener {
+    public void onClick();
+  }
   
   public GestureListener(WindowManager.LayoutParams p, WindowManager wm, ImageView iv) {
     this.params = p;
@@ -47,12 +51,12 @@ public class GestureListener extends SimpleOnGestureListener {
     initialTouchY = e.getRawY();
     return false;
   }
+
   
   @Override 
   public boolean onSingleTapUp(MotionEvent e) {
     Log.i(TAG, "onSingleTapUp" + e.getAction() + "(" + e.getX() + "," + e.getY() + ")");
+    ChatHeadResManager.getInstance().getChatHeadClickListener().onClick();
     return false;
   }
-  
-  
 }
