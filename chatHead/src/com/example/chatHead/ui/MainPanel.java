@@ -10,7 +10,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import com.example.chatHead.service.ChatHeadResManager;
 import com.example.chatHead.service.GestureListener;
 

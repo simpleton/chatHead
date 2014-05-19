@@ -20,7 +20,7 @@ public class GestureListener extends SimpleOnGestureListener {
   
   @Override 
   public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-    Log.i(TAG, "OnScroll: " + e2.getAction() + "(" + e1.getX() + "," + e1.getY() + ")" + ",(" + e2.getX() + "," + e2.getY() + ")");
+    //Log.i(TAG, "OnScroll: " + e2.getAction() + "(" + e1.getX() + "," + e1.getY() + ")" + ",(" + e2.getX() + "," + e2.getY() + ")");
     if (listener != null) {
       listener.onMove((int) e2.getX(), (int) e2.getY());
     }
@@ -29,7 +29,7 @@ public class GestureListener extends SimpleOnGestureListener {
   
   @Override 
   public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-    Log.i(TAG, "OnFling: " + e2.getAction() + "(" + e1.getX() + "," + e1.getY() + ")" + ",(" + e2.getX() + "," + e2.getY() + ")");
+    //Log.i(TAG, "OnFling: " + e2.getAction() + "(" + e1.getX() + "," + e1.getY() + ")" + ",(" + e2.getX() + "," + e2.getY() + ")");
     return false;
   }
   
@@ -42,8 +42,7 @@ public class GestureListener extends SimpleOnGestureListener {
     return false;
   }
 
-  
-  @Override 
+  @Override
   public boolean onSingleTapUp(MotionEvent e) {
     Log.i(TAG, "onSingleTapUp" + e.getAction() + "(" + e.getX() + "," + e.getY() + ")");
     ChatHeadResManager.getInstance().getChatHeadClickListener().onClick();

@@ -2,6 +2,7 @@ package com.example.chatHead.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import com.example.chatHead.service.ChatHeadLauncher;
 
 public class ChatHeadView implements OnCHTouchListener{
   private Bitmap bitmap;
@@ -21,7 +22,11 @@ public class ChatHeadView implements OnCHTouchListener{
   
   public void setTouched(boolean touched) {
     this.isTouched = touched;
-
+    if (touched) {
+      ChatHeadLauncher.getInstance().getService().MaximalPannel();
+    } else {
+      ChatHeadLauncher.getInstance().getService().MinimalPannel(x, y);
+    }
   }
   public void draw(Canvas canvas) {
     canvas.drawBitmap(bitmap, x - (bitmap.getWidth() / 2), y - (bitmap.getHeight() / 2), null);
@@ -47,5 +52,13 @@ public class ChatHeadView implements OnCHTouchListener{
     if (isTouched()) {
       setTouched(false);
     }    
+  }
+
+  public int getWidth() {
+    return bitmap.getWidth();
+  }
+
+  public int getHeight() {
+    return bitmap.getHeight();
   }
 }

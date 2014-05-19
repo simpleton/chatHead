@@ -1,7 +1,5 @@
 package com.example.chatHead.service;
 
-import com.example.chatHead.service.GestureListener.OnSingleClickListener;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -9,21 +7,26 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import com.example.chatHead.service.GestureListener.OnSingleClickListener;
 
 public class ChatHeadResManager {
   private static ChatHeadResManager ins;
   private OnSingleClickListener clickListener;
   private ImageView headImage;
   private Bitmap bitmap;
-  private final WindowManager.LayoutParams params;
+  private final WindowManager.LayoutParams wholeScrennParams;
+
   @SuppressWarnings("deprecation")
   private ChatHeadResManager() {
-    params = new WindowManager.LayoutParams(
+    wholeScrennParams = new WindowManager.LayoutParams(
         WindowManager.LayoutParams.FILL_PARENT,
         WindowManager.LayoutParams.FILL_PARENT,
         WindowManager.LayoutParams.TYPE_PHONE,
         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
         PixelFormat.TRANSLUCENT);
+    wholeScrennParams.gravity = Gravity.TOP | Gravity.LEFT;
+    wholeScrennParams.x = 0;
+    wholeScrennParams.y = 0;
   }
   
   public static ChatHeadResManager getInstance() {
@@ -35,10 +38,19 @@ public class ChatHeadResManager {
     return ins;
   }
   
-  public WindowManager.LayoutParams getWindowManagerParams() {
-    return params;
+  public WindowManager.LayoutParams getWholeScrennParams() {
+    return wholeScrennParams;
   }
-  
+
+  public WindowManager.LayoutParams getChatHeadParams() {
+    return new WindowManager.LayoutParams(
+        this.bitmap.getWidth(),
+        this.bitmap.getHeight(),
+        WindowManager.LayoutParams.TYPE_PHONE,
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        PixelFormat.TRANSLUCENT);
+  }
+
   /*packaged*/ void setChatHeadClickListener(OnSingleClickListener l) {
     this.clickListener = l;
   }
